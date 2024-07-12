@@ -10,6 +10,8 @@ from transformers import get_linear_schedule_with_warmup
 import torch
 from torch.nn.utils.rnn import pad_sequence
 
+import joblib
+
 import config, model, dataset, engine
 
 def process_data(dataset):
@@ -46,6 +48,12 @@ if __name__ == "__main__":
   valid_sentences, valid_tag, valid_enc_tag = process_data(dataset_bio["validation"])
   test_sentences, test_tag, test_enc_tag = process_data(dataset_bio["test"])
   num_tag = len(list(train_enc_tag.classes_))
+  
+  meta_data = {
+        "enc_tag": train_enc_tag,
+    }
+  
+  joblib.dump(meta_data, "meta.bin")
 
   train_dataset = dataset.NERDataset(
       texts=train_sentences, tags=train_tag
