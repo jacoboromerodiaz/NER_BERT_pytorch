@@ -1,5 +1,6 @@
 import datasets
 import torch
+from config import TOKENIZER
 
 dataset = datasets.load_dataset("DFKI-SLT/few-nerd", 'supervised')
 train_dataset = dataset["train"]
